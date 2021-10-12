@@ -7,6 +7,7 @@ package myClasses;
 
 import entity.Author;
 import entity.Book;
+import entity.Reader;
 import java.util.Scanner;
 
 /**
@@ -17,6 +18,7 @@ public class App {
     
     private Scanner scanner = new Scanner(System.in);
     private Book[] books = new Book[10];
+    private Reader[] readers = new Reader[10];
     
     public void run(){
         String repeat = "r";
@@ -25,6 +27,8 @@ public class App {
             System.out.println("0: Закончить программу");
             System.out.println("1: Добавить книгу");
             System.out.println("2: Показать список книг");
+            System.out.println("3: Добавить читателя");
+            System.out.println("4: Показать список читателей");
             
             int task = scanner.nextInt(); scanner.nextLine();
             
@@ -47,6 +51,24 @@ public class App {
                     for (int i=0; i < books.length; i++){
                         if(books[i] != null) {
                             System.out.println(books[i].toString());
+                        }
+                    }      
+                    System.out.println("------------------");
+                    break;
+                case 3:
+                    System.out.println("--- Добавление читателя ---");
+                    for (int i=0; i < readers.length; i++){
+                        if(readers[i] == null) {
+                            readers[i] = addReader();
+                            break;
+                        }
+                    }      
+                    break;
+                case 4:
+                    System.out.println("--- Список читателей ---");
+                    for (int i=0; i < readers.length; i++){
+                        if(readers[i] != null) {
+                            System.out.println(readers[i].toString());
                         }
                     }      
                     System.out.println("------------------");
@@ -86,6 +108,21 @@ public class App {
         book.setAuthors(authors);
         
         return book;
+    }
+    
+    private Reader addReader(){
+        Reader reader = new Reader();
+        
+        System.out.print("Введите имя читателя: ");
+        reader.setFirstName(scanner.nextLine());
+        
+        System.out.print("Введите фамилию читателя: ");
+        reader.setLastName(scanner.nextLine());
+        
+        System.out.print("Введите телефон читателя: ");
+        reader.setTelephone(scanner.nextLine());
+        
+        return reader;
     }
 
 }
