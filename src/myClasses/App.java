@@ -87,6 +87,7 @@ public class App {
                             System.out.println("Книга "+histories[i].getBook().getBookName()
                                                 +" выдана читателю "+histories[i].getReader().getFirstName()
                                                 +" "+histories[i].getReader().getLastName()
+                                                +" "+histories[i].getGivenDate()
                             );
                             break;
                         }
@@ -95,11 +96,28 @@ public class App {
                     break;
                 case 6:
                     System.out.println("--- Возврат книги ---");
-                    for (int i=0; i < readers.length; i++){
-                        if(readers[i] != null) {
-                            System.out.println(readers[i].toString());
+                    System.out.println("Выберите номер книги, какую хотите вернуть:");
+                    for (int i=0; i < histories.length; i++){
+                        if(histories[i] != null) {
+                           
+                            System.out.println(i+1+". Книга "+histories[i].getBook().getBookName()
+                                                +" выдана читателю "+histories[i].getReader().getFirstName()
+                                                +" "+histories[i].getReader().getLastName()
+                                    
+                            );
+                            break;
                         }
-                    }      
+                    }
+                            int numberHistory = scanner.nextInt(); scanner.nextLine();
+                            Calendar cal = new GregorianCalendar();
+                            histories[numberHistory-1].setReturnedDate(cal.getTime());
+                            System.out.println("Книга "+histories[numberHistory-1].getBook().getBookName()
+                                                +" возвращена"
+                                                +" "+histories[numberHistory-1].getReturnedDate()
+                            );
+                            
+
+                    
                     System.out.println("------------------");
                     break;
                     
