@@ -9,6 +9,7 @@ import entity.Author;
 import entity.Book;
 import entity.History;
 import entity.Reader;
+import interfaces.Keeping;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -25,6 +26,13 @@ public class App {
     private List<Book> books = new ArrayList<>();
     private List<Reader> readers = new ArrayList<>();
     private List<History> histories = new ArrayList<>();
+    private Keeping keeping = new Keeper();
+    
+    // поля, конструкторы, методы - такой порядок
+    
+    public App() {
+        books = keeping.loadBooks();
+    }
     
     public void run(){
         String repeat = "r";
@@ -48,6 +56,7 @@ public class App {
                 case 1:
                     System.out.println("--- Добавление книги ---");
                     books.add(addBook());
+                    keeping.saveBooks(books);
                     break;
                 case 2:
                     System.out.println("--- Список книг ---");
