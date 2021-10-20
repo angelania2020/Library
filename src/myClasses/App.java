@@ -32,6 +32,8 @@ public class App {
     
     public App() {
         books = keeping.loadBooks();
+        readers = keeping.loadReaders();
+        histories = keeping.loadHistories();
     }
     
     public void run(){
@@ -70,6 +72,7 @@ public class App {
                 case 3:
                     System.out.println("--- Добавление читателя ---");
                     readers.add(addReader());
+                    keeping.saveReaders(readers);
                     break;
                 case 4:
                     System.out.println("--- Список читателей ---");
@@ -84,6 +87,7 @@ public class App {
                     System.out.println("--- Выдача книги ---");
                     History history = addHistory();
                     histories.add(history);
+                    keeping.saveHistories(histories);
                     System.out.println("Книга "+history.getBook().getBookName()
                                         +" выдана читателю "+history.getReader().getFirstName()
                                         +" "+history.getReader().getLastName()
@@ -96,7 +100,7 @@ public class App {
                     System.out.println("Список читаемых книг:");
                     int n=0;
                     for (int i=0; i < histories.size(); i++){
-                        if(histories.get(i).getReturnedDate() == null) { 
+                        if(histories.get(i).getReturnedDate() == null && histories.get(i) != null) { 
                             //&& histories.get(i) != null
                             System.out.println(i+1+". Книга "
                                     +histories.get(i).getBook().getBookName()
@@ -115,6 +119,7 @@ public class App {
                     int numberHistory = scanner.nextInt(); scanner.nextLine();
                     Calendar cal = new GregorianCalendar();
                     histories.get(numberHistory-1).setReturnedDate(cal.getTime());
+                    keeping.saveHistories(histories);
                     System.out.println("Книга "+histories.get(numberHistory-1).getBook().getBookName()
                                                 +" возвращена"
                                                 +" "+histories.get(numberHistory-1).getReturnedDate()
