@@ -55,7 +55,12 @@ public class History implements Serializable {
 
     @Override
     public String toString() {
-        return "History{" + "reader=" + reader + ", book=" + book + ", givenDate=" + givenDate + ", returnedDate=" + returnedDate + '}';
+        return "History{" 
+                + "reader=" + reader 
+                + ", book=" + book 
+                + ", givenDate=" + givenDate 
+                + ", returnedDate=" + returnedDate 
+                + '}';
     }
     
     
