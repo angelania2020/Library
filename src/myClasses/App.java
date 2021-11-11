@@ -231,16 +231,16 @@ public class App {
                         +". "+books.get(i).getBookName()
                         +". "+books.get(i).getPublishedYear()
                         +". "+sbAuthorNames.toString()
-//                        +". "+books[i].getAuthors()[0].getFirstName()
-//                        +". "+books[i].getAuthors()[0].getLastName()
+                        // +". "+books[i].getAuthors()[0].getFirstName()
+                        // +". "+books[i].getAuthors()[0].getLastName()
                         +". В наличии: " + books.get(i).getCount()
-                );
+                        );
                 n++;
-                        }
-                        }
+            }
+        }
         if(n < 1){
             System.out.println("Нет книг для чтения.");
-            return null;
+            return null; // вместо history вернёт null
         }
         
         System.out.println("Выберите номер книги: ");
@@ -259,7 +259,6 @@ public class App {
         history.setReader(readers.get(numberReader-1));
         Calendar c = new GregorianCalendar();
         history.setGivenDate(c.getTime());
-        
         
         return history;
     }
