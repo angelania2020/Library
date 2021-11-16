@@ -10,8 +10,13 @@ import entity.Book;
 import entity.History;
 import entity.Reader;
 import interfaces.Keeping;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
@@ -161,7 +166,7 @@ public class App {
                         + ". " + sbAuthorNames.toString()
                         // +". "+books[i].getAuthors()[0].getFirstName()
                         // +". "+books[i].getAuthors()[0].getLastName()
-                        + ". В наличии: " + books.get(i).getCount()
+                        + "В наличии: " + books.get(i).getCount()
                 );
                 n++;
             }
@@ -206,10 +211,37 @@ public class App {
         System.out.println("--- Список книг ---");
         for (int i = 0; i < books.size(); i++) {
             if (books.get(i) != null && books.get(i).getCount() > 0) {
-                System.out.println(books.get(i).toString());
+                System.out.printf("%d. %s. %s. %d. В наличии экземпляров: %d%n",
+                        i + 1,
+                        books.get(i).getBookName(),
+                        Arrays.toString(books.get(i).getAuthors()),
+                        books.get(i).getPublishedYear(),
+                        books.get(i).getCount()
+                );
+            } else if (books.get(i) != null) {
+                System.out.printf("%d. %s. %s. %d. Книга читается до: %s%n",
+                        i + 1,
+                        books.get(i).getBookName(),
+                        Arrays.toString(books.get(i).getAuthors()),
+                        books.get(i).getPublishedYear(),
+                        getReturnDate(books.get(i))
+                );
             }
         }
         System.out.println("------------------");
+    }
+
+    private String getReturnDate(Book book) {
+        for (int i = 0; i < histories.size(); i++) {
+            if (book.getBookName().equals(histories.get(i).getBook().getBookName())
+                    && histories.get(i).getReturnedDate() == null) {
+                Date givenDate = histories.get(i).getGivenDate();
+                LocalDate localGivenDate = givenDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                localGivenDate = localGivenDate.plusDays(14);
+                return localGivenDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+            }
+        }
+        return "";
     }
 
     private void printListReaders() {
