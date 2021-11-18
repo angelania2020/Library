@@ -175,7 +175,7 @@ public class App {
                 + " " + history.getReader().getLastName()
                 + " " + history.getGivenDate()
         );
-        System.out.println("------------------");
+        System.out.println("-----------------------");
     }
 
     private Set<Integer> printListBooks() {
@@ -201,7 +201,10 @@ public class App {
                 );
             }
         }
-        System.out.println("------------------");
+        if (setNumbersBooks.isEmpty()) {
+        System.out.println("Нет (свободных для чтения) книг в библиотеке!");
+        System.out.println("------------------------");
+        }
         return setNumbersBooks;
     }
 
@@ -224,15 +227,18 @@ public class App {
         for (int i = 0; i < readers.size(); i++) {
             if (readers.get(i) != null) {
                 System.out.printf("%d. %s %s. Телефон: %s%n",
-                         i + 1,
-                         readers.get(i).getFirstName(),
-                         readers.get(i).getLastName(),
-                         readers.get(i).getTelephone()
+                        i + 1,
+                        readers.get(i).getFirstName(),
+                        readers.get(i).getLastName(),
+                        readers.get(i).getTelephone()
                 );
                 setNumbersReaders.add(i + 1);
             }
         }
-        System.out.println("------------------");
+        if (setNumbersReaders.isEmpty()) {
+            System.out.println("Нет читателей в библиотеке!");
+            System.out.println("------------------------");
+        }
         return setNumbersReaders;
     }
 
@@ -283,7 +289,7 @@ public class App {
         }
         if (setNumbersBook.isEmpty()) {
             System.out.println("Нет читаемых книг!");
-            System.out.println("-------------------");
+            System.out.println("---------------------");
         }
         return setNumbersBook;
     }
