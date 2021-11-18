@@ -181,10 +181,16 @@ public class App {
         scanner.nextLine();
 
         System.out.println("Список читателей:");
+        int m = 0;
         for (int i = 0; i < readers.size(); i++) {
             if (readers.get(i) != null) {
                 System.out.println(i + 1 + ". " + readers.get(i).toString());
+                m++;
             }
+        }
+        if (m < 1) {
+            System.out.println("Нет читателей в библиотеке.");
+            return;
         }
         System.out.println("Выберите номер читателя: ");
         int numberReader = scanner.nextInt();
@@ -209,6 +215,7 @@ public class App {
 
     private void printListBooks() {
         System.out.println("--- Список книг ---");
+        int n = 0;
         for (int i = 0; i < books.size(); i++) {
             if (books.get(i) != null && books.get(i).getCount() > 0) {
                 System.out.printf("%d. %s. %s. %d. В наличии экземпляров: %d%n",
@@ -218,6 +225,7 @@ public class App {
                         books.get(i).getPublishedYear(),
                         books.get(i).getCount()
                 );
+                n++;
             } else if (books.get(i) != null) {
                 System.out.printf("%d. %s. %s. %d. Книга читается до: %s%n",
                         i + 1,
@@ -226,9 +234,13 @@ public class App {
                         books.get(i).getPublishedYear(),
                         getReturnDate(books.get(i))
                 );
+                n++;
             }
         }
-        System.out.println("------------------");
+        if (n < 1) {
+            System.out.println("Нет книг в библиотеке!");
+            System.out.println("-------------------");
+        }
     }
 
     private String getReturnDate(Book book) {
@@ -246,12 +258,17 @@ public class App {
 
     private void printListReaders() {
         System.out.println("--- Список читателей ---");
+        int n = 0;
         for (int i = 0; i < readers.size(); i++) {
             if (readers.get(i) != null) {
                 System.out.println(readers.get(i).toString());
+                n++;
             }
         }
-        System.out.println("------------------");
+        if (n < 1) {
+            System.out.println("Нет читателей в библиотеке!");
+            System.out.println("-------------------");
+        }
     }
 
     private void returnBook() {
