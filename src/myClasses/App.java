@@ -34,12 +34,15 @@ public class App {
     private List<Book> books = new ArrayList<>();
     private List<Reader> readers = new ArrayList<>();
     private List<History> histories = new ArrayList<>();
+    private List<Author> authors = new ArrayList<>();
     //---------------Сохранение--------------------
-    private Keeping keeping = new Keeper();
+//    private Keeping keeping = new Keeper();
+    private Keeping keeping = new KeeperToBase();
 
     // поля, конструкторы, методы - такой порядок
     public App() {
         books = keeping.loadBooks();
+        authors = keeping.loadAuthors();
         readers = keeping.loadReaders();
         histories = keeping.loadHistories();
     }
@@ -56,6 +59,8 @@ public class App {
             System.out.println("5: Выдать книгу читателю");
             System.out.println("6: Вернуть книгу");
             System.out.println("7: Список выданных книг");
+            System.out.println("8: Добавить автора");
+            System.out.println("9: Список авторов");
 
             int task = scanner.nextInt();
             scanner.nextLine();
@@ -86,6 +91,12 @@ public class App {
                 case 7:
                     printListGivenBooks();
                     break;
+                case 8:
+                    addAuthor();
+                    break;
+                case 9:
+                    printListAuthors();
+                    break;
                 default:
                     System.out.println("Выберите цифру из списка!");
             }
@@ -96,7 +107,26 @@ public class App {
         System.out.println("--- Добавление книги ---");
 
         Book book = new Book();
-
+        
+        Set<Integer> setNumbersAuthors = printListAuthors();
+        if(setNumbersAuthors.isEmpty()){
+            return;
+        }
+        System.out.println("Если есть авторы книги в списке выберите 1");
+        if(getNumber() != 1){
+            System.out.println("Добавьте автора!");
+            return;
+        }
+        System.out.print("Сколько авторов у книги: ");
+        int countAuthors = getNumber();
+        List<Author> authorsBook = new ArrayList<>();
+        for (int i = 0; i < countAuthors; i++) {
+            System.out.println("Введите номер автора "+(i+1));
+            int numberAuthor = insertNumber(setNumbersAuthors);
+            authorsBook.add(authors.get(numberAuthor - 1));
+        }
+        book.setAuthors(authorsBook);
+        
         System.out.print("Введите название книги: ");
         book.setBookName(scanner.nextLine());
 
@@ -107,20 +137,6 @@ public class App {
         book.setQuantity(getNumber());
         book.setCount(book.getQuantity());
 
-        System.out.println("Введите автора книги");
-
-        System.out.print("Сколько авторов у книги: ");
-        int countAuthors = getNumber();
-        Author[] authors = new Author[countAuthors];
-        for (int i = 0; i < authors.length; i++) {
-            Author author = new Author();
-            System.out.println("Имя автора " + (i + 1) + ": ");
-            author.setFirstName(scanner.nextLine());
-            System.out.println("Фамилия автора: ");
-            author.setLastName(scanner.nextLine());
-            authors[i] = author;
-        }
-        book.setAuthors(authors);
         System.out.println("-----------------");
         books.add(book);
         keeping.saveBooks(books);
@@ -186,24 +202,24 @@ public class App {
                 System.out.printf("%d. %s. %s. %d. В наличии экземпляров: %d%n",
                         i + 1,
                         books.get(i).getBookName(),
-                        Arrays.toString(books.get(i).getAuthors()),
+                        Arrays.toString(books.get(i).getAuthors().toArray()),
                         books.get(i).getPublishedYear(),
                         books.get(i).getCount()
                 );
                 setNumbersBooks.add(i + 1);
             } else if (books.get(i) != null) {
-                System.out.printf("%d. %s. %s. %d. Книга читается до: %s%n",
+                System.out.printf("%1$d. (Книга читается до: %5$s) %2$s. %4$d. %3$s%n",
                         i + 1,
                         books.get(i).getBookName(),
-                        Arrays.toString(books.get(i).getAuthors()),
+                        Arrays.toString(books.get(i).getAuthors().toArray()),
                         books.get(i).getPublishedYear(),
                         getReturnDate(books.get(i))
                 );
             }
         }
         if (setNumbersBooks.isEmpty()) {
-        System.out.println("Нет (свободных для чтения) книг в библиотеке!");
-        System.out.println("------------------------");
+            System.out.println("Нет (свободных для чтения) книг в библиотеке!");
+            System.out.println("------------------------");
         }
         return setNumbersBooks;
     }
@@ -295,7 +311,7 @@ public class App {
     }
 
     private int getNumber() {
-        int number = 0;
+        int number;
         do {
             String strNumber = scanner.nextLine();
             try {
@@ -316,6 +332,37 @@ public class App {
             }
             System.out.println("Попробуй еще: ");
         } while (true);
+    }
+    
+    
+    private Set<Integer> printListAuthors() {
+        Set<Integer> numbersAuthors = new HashSet<>();
+        if(authors.isEmpty()){
+            System.out.println("Список авторов пуст, добавьте авторов книги.");
+            return new HashSet<>();
+        }else{
+            System.out.println("Список авторов:");
+        }
+        for (int i = 0; i < authors.size(); i++) {
+            System.out.printf("%d. %s %s%n"
+                    ,i+1
+                    ,authors.get(i).getFirstName()
+                    ,authors.get(i).getLastName()
+            ); 
+            numbersAuthors.add(i+1);
+        }
+        return numbersAuthors;
+    }
+
+    private void addAuthor() {
+        System.out.println("---- Добавить автора -----");
+        Author author = new Author();
+        System.out.println("Имя автора: ");
+        author.setFirstName(scanner.nextLine());
+        System.out.println("Фамилия автора: ");
+        author.setLastName(scanner.nextLine());
+        authors.add(author);
+        keeping.saveAuthors(authors);
     }
 
 }
