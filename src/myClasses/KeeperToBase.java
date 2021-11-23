@@ -23,9 +23,9 @@ import javax.persistence.Persistence;
  */
 public class KeeperToBase implements Keeping {
 
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("LibraryPU");
-    private EntityManager em = emf.createEntityManager();
-    private EntityTransaction tx = em.getTransaction();
+    private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("LibraryPU");
+    private final EntityManager em = emf.createEntityManager();
+    private final EntityTransaction tx = em.getTransaction();
 
     @Override
     public void saveBooks(List<Book> books) {
@@ -53,21 +53,26 @@ public class KeeperToBase implements Keeping {
 
     @Override
     public List<Book> loadBooks() {
-        try {
-            return (List<Book>) em.createQuery("SELECT b FROM Book b")
-                    .getResultList();
-        } catch (Exception e) {
-            System.out.println("Таблица BOOK пуста.");
+        if (em.createQuery("SELECT b FROM Book b").getResultList().isEmpty()) {
+            System.out.println("Таблица book пуста.");
         }
-        return new ArrayList<Book>();  // чтобы не было NullPointerException
+        try {
+            return (List<Book>) em.createQuery("SELECT b FROM Book b").getResultList();
+        } catch (Exception e) {
+            System.out.println("Таблица book пуста.");
+        }
+        return new ArrayList<>();  // чтобы не было NullPointerException
     }
 
+    @Override
     public List<Author> loadAuthors() {
+        if (em.createQuery("SELECT a FROM Author a").getResultList().isEmpty()) {
+            System.out.println("Таблица author пуста.");
+        }
         try {
-            return (List<Author>) em.createQuery("SELECT author FROM Author author")
-                    .getResultList();
+            return (List<Author>) em.createQuery("SELECT a FROM Author a").getResultList();
         } catch (Exception e) {
-            System.out.println("Таблица Author пуста");
+            System.out.println("Таблица author пуста.");
         }
         return new ArrayList<>();
     }
@@ -85,11 +90,13 @@ public class KeeperToBase implements Keeping {
 
     @Override
     public List<Reader> loadReaders() {
+        if (em.createQuery("SELECT r FROM Reader r").getResultList().isEmpty()) {
+            System.out.println("Таблица reader пуста.");
+        }
         try {
-            return (List<Reader>) em.createQuery("SELECT reader FROM Reader reader")
-                    .getResultList();
+            return (List<Reader>) em.createQuery("SELECT r FROM Reader r").getResultList();
         } catch (Exception e) {
-            System.out.println("Таблица Reader пуста");
+            System.out.println("Таблица reader пуста.");
         }
         return new ArrayList<>();
     }
@@ -97,21 +104,23 @@ public class KeeperToBase implements Keeping {
     @Override
     public void saveHistories(List<History> histories) {
         tx.begin();
-            for (int i = 0; i < histories.size(); i++) {
-                if(histories.get(i).getId() == null){
-                    em.persist(histories.get(i));
-                }
+        for (int i = 0; i < histories.size(); i++) {
+            if (histories.get(i).getId() == null) {
+                em.persist(histories.get(i));
             }
+        }
         tx.commit();
     }
 
     @Override
     public List<History> loadHistories() {
-                 try {
-            return (List<History>) em.createQuery("SELECT history FROM History history")
-                    .getResultList();
+        if (em.createQuery("SELECT h FROM History h").getResultList().isEmpty()) {
+            System.out.println("Таблица history пуста.");
+        }
+        try {
+            return (List<History>) em.createQuery("SELECT h FROM History h").getResultList();
         } catch (Exception e) {
-            System.out.println("Таблица History пуста");
+            System.out.println("Таблица history пуста.");
         }
         return new ArrayList<>();
     }

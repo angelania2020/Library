@@ -20,6 +20,7 @@ import javax.persistence.Temporal;
  */
 @Entity
 public class History implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -33,6 +34,14 @@ public class History implements Serializable {
     private Date returnedDate;
 
     public History() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Reader getReader() {
@@ -67,25 +76,14 @@ public class History implements Serializable {
         this.returnedDate = returnedDate;
     }
 
-    
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-    
-    
     @Override
     public String toString() {
-        return "History{" 
-                + "reader=" + reader 
-                + ", book=" + book 
-                + ", givenDate=" + givenDate 
-                + ", returnedDate=" + returnedDate 
+        return "History{"
+                + "reader=" + reader
+                + ", book=" + book
+                + ", givenDate=" + givenDate
+                + ", returnedDate=" + returnedDate
                 + '}';
     }
 
-    
 }

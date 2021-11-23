@@ -21,6 +21,7 @@ import javax.persistence.OneToOne;
  */
 @Entity
 public class Book implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -33,6 +34,14 @@ public class Book implements Serializable {
     private int count;
 
     public Book() { //это конструктор, без void, создаем его, чтобы не потерять
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getBookName() {
@@ -51,7 +60,6 @@ public class Book implements Serializable {
         this.authors = authors;
     }
 
-
     public int getPublishedYear() {
         return publishedYear;
     }
@@ -59,7 +67,6 @@ public class Book implements Serializable {
     public void setPublishedYear(int publishedYear) {
         this.publishedYear = publishedYear;
     }
-
 
     public int getQuantity() {
         return quantity;
@@ -77,22 +84,14 @@ public class Book implements Serializable {
         this.count = count;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     @Override
     public String toString() {
-        return "Book{" 
-                + "bookName=" + bookName 
+        return "Book{"
+                + "bookName=" + bookName
                 + ", authors=" + Arrays.toString(authors.toArray())
-                + ", publishedYear=" + publishedYear 
-                + ", quantity=" + quantity 
-                + ", count=" + count 
+                + ", publishedYear=" + publishedYear
+                + ", quantity=" + quantity
+                + ", count=" + count
                 + '}';
     }
 

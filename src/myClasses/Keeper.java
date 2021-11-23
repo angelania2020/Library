@@ -29,8 +29,8 @@ public class Keeper implements Keeping{
     
     @Override
     public void saveBooks(List<Book> books) {
-        FileOutputStream fos = null; //идентификаторы только, объектов нет
-        ObjectOutputStream oos = null;
+        FileOutputStream fos; //идентификаторы только, объектов нет
+        ObjectOutputStream oos;
         
         try {
             fos = new FileOutputStream("books");
@@ -46,8 +46,8 @@ public class Keeper implements Keeping{
     
     @Override
     public List<Book> loadBooks() {
-        FileInputStream fis = null;
-        ObjectInputStream ois = null;
+        FileInputStream fis;
+        ObjectInputStream ois;
         List<Book> books = new ArrayList<>();
         try {
             fis = new FileInputStream("books");
@@ -66,8 +66,8 @@ public class Keeper implements Keeping{
     
     @Override
     public void saveAuthors(List<Author> authors) {
-        FileOutputStream fos = null;
-        ObjectOutputStream oos = null;
+        FileOutputStream fos;
+        ObjectOutputStream oos;
         try {
             fos = new FileOutputStream("authors");
             oos = new ObjectOutputStream(fos);
@@ -81,8 +81,8 @@ public class Keeper implements Keeping{
     }
     @Override
     public List<Author> loadAuthors() {
-        FileInputStream fis = null;
-        ObjectInputStream ois = null;
+        FileInputStream fis;
+        ObjectInputStream ois;
         List<Author> authors = new ArrayList<>();
         try {
             fis = new FileInputStream("authors");
@@ -100,8 +100,8 @@ public class Keeper implements Keeping{
     
     @Override
     public void saveReaders(List<Reader> readers) {
-        FileOutputStream fos = null; //идентификаторы только, объектов нет
-        ObjectOutputStream oos = null;
+        FileOutputStream fos; //идентификаторы только, объектов нет
+        ObjectOutputStream oos;
         
         try {
             fos = new FileOutputStream("readers");
@@ -117,8 +117,8 @@ public class Keeper implements Keeping{
     
     @Override
     public List<Reader> loadReaders() {
-        FileInputStream fis = null;
-        ObjectInputStream ois = null;
+        FileInputStream fis;
+        ObjectInputStream ois;
         List<Reader> readers = new ArrayList<>();
         try {
             fis = new FileInputStream("readers");
@@ -136,8 +136,8 @@ public class Keeper implements Keeping{
     
     @Override
     public void saveHistories(List<History> histories){
-        FileOutputStream fos = null; //идентификаторы только, объектов нет
-        ObjectOutputStream oos = null;
+        FileOutputStream fos; //идентификаторы только, объектов нет
+        ObjectOutputStream oos;
         
         try {
             fos = new FileOutputStream("histories");
@@ -153,8 +153,8 @@ public class Keeper implements Keeping{
     
     @Override
     public List<History> loadHistories() {
-        FileInputStream fis = null;
-        ObjectInputStream ois = null;
+        FileInputStream fis;
+        ObjectInputStream ois;
         List<History> histories = new ArrayList<>();
         try {
             fis = new FileInputStream("histories");

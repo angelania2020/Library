@@ -7,7 +7,7 @@ package library;
 
 //import java.util.Arrays;
 import myClasses.App;
-import myClasses.GuiApp;
+//import myClasses.GuiApp;
 
 /**
  *
@@ -25,12 +25,11 @@ public class Library {
 //
 //        System.out.println(Arrays.toString(args));
 
-
         App app; //link null
         app = new App();
         app.run();
         //app.toString(); //новый метод перекрыл тот, что был в объекте
         //app.super.toString(); //тот, который в объекте !!! пока не работало?
     }
-    
+
 }

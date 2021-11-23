@@ -22,7 +22,7 @@ public class GuiApp {
     private List<Book> books = new ArrayList<>();
     private List<Reader> readers = new ArrayList<>();
     private List<History> histories = new ArrayList<>();
-    private Keeping keeping = new Keeper();
+    private final Keeping keeping = new Keeper();
 
     public GuiApp() {
         books = keeping.loadBooks();
